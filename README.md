@@ -110,7 +110,7 @@ Content-Type: application/json
 ![Request](./assets/1.png)
 
 ### 🔹 Memory Demonstration
-![Memory](./screenshots/2.png)
+![Memory](./assets/2.png)
 ---
 
 ##  Memory Implementation
