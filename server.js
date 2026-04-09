@@ -10,9 +10,7 @@ app.use(cors());
 
 const PORT = process.env.PORT || 3000;
 
-// ==========================
-// GLOBAL ERROR HANDLING (IMPORTANT)
-// ==========================
+// GLOBAL ERROR HANDLING
 process.on("uncaughtException", (err) => {
   console.error("UNCAUGHT EXCEPTION:", err);
 });
@@ -21,15 +19,11 @@ process.on("unhandledRejection", (err) => {
   console.error("UNHANDLED REJECTION:", err);
 });
 
-// ==========================
 // SESSION MEMORY (SHORT-TERM)
-// ==========================
 const sessions = {};
 const MAX_HISTORY = 10;
 
-// ==========================
-// LONG-TERM MEMORY (SAFE FILE HANDLING)
-// ==========================
+// LONG-TERM MEMORY 
 function loadMemory() {
   try {
     if (!fs.existsSync("memory.json")) return {};
@@ -51,9 +45,7 @@ function saveMemory(data) {
 
 let longTermMemory = loadMemory();
 
-// ==========================
 // MEMORY UPDATE LOGIC
-// ==========================
 function updateMemory(sessionId, message) {
   if (!longTermMemory[sessionId]) {
     longTermMemory[sessionId] = {};
@@ -72,9 +64,7 @@ function updateMemory(sessionId, message) {
   saveMemory(longTermMemory);
 }
 
-// ==========================
 // SYSTEM PROMPT
-// ==========================
 const SYSTEM_PROMPT = `You are a chatbot with a strict personality. Follow all rules exactly.
 
 - Start every reply with ONE emoji and a space
@@ -91,9 +81,7 @@ Occasionally include:
 Never break character.
 `;
 
-// ==========================
 // CHAOS INJECTION
-// ==========================
 function injectChaos(text) {
   const rand = Math.random();
 
@@ -110,9 +98,7 @@ function injectChaos(text) {
   return text;
 }
 
-// ==========================
 // CHAT ENDPOINT
-// ==========================
 app.post("/chat", async (req, res) => {
   try {
     const { message, sessionId } = req.body;
@@ -137,7 +123,7 @@ app.post("/chat", async (req, res) => {
     // Get short-term memory
     const recentHistory = sessions[sessionId].slice(-MAX_HISTORY);
 
-    // Safe memory injection (FIXED)
+    // Safe memory injection
     const userMemory = longTermMemory[sessionId] || {};
     const memoryContext = `User info: ${userMemory.profile || ""} ${userMemory.interest || ""}`;
 
@@ -162,7 +148,7 @@ app.post("/chat", async (req, res) => {
           Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
           "Content-Type": "application/json"
         },
-        timeout: 10000 // ✅ FIX ECONNRESET
+        timeout: 10000 
       }
     );
 
@@ -190,7 +176,6 @@ app.post("/chat", async (req, res) => {
   }
 });
 
-// ==========================
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
