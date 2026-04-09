@@ -41,7 +41,7 @@ The bot behaves intelligently for career-related queries and hilariously clueles
 ### 1. Clone the repository
 
 ```bash
-git clone <your-repo-link>
+git clone https://github.com/Chaitanya-Wanjari/Personality-Chatbot
 cd personality-chatbot
 ```
 
