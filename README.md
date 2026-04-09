@@ -106,6 +106,11 @@ Content-Type: application/json
 }
 ```
 
+### 🔹 API Request (Postman)
+![Request](./assets/1.png)
+
+### 🔹 Memory Demonstration
+![Memory](./screenshots/2.png)
 ---
 
 ##  Memory Implementation
